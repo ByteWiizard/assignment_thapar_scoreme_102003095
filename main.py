@@ -35,6 +35,9 @@ Example:
 def longest_path(graph: list) -> int:
     # Your implementation goes here
     topological_order = topological_sort(graph)
+    
+    # for num in topological_order:
+    #     print(num)
     return calculate_longest_path(graph,topological_order)
     
 
@@ -63,8 +66,12 @@ def topological_sort(graph):
 def calculate_longest_path(graph, topo_order):
     # Your implementation goes here
 
-    dist = [-float('inf')] * len(graph)
-    dist[0] = 0
+    n = len(graph)
+    dist = [-float('inf')] * n
+
+    for i in range(n):
+        if all(i != neighbor for neighbors in graph for neighbor, _ in neighbors):
+            dist[i] = 0
 
 
     for node in topo_order:
@@ -73,5 +80,5 @@ def calculate_longest_path(graph, topo_order):
                 if dist[neighbor] < dist[node] + weight:
                     dist[neighbor] = dist[node] + weight
     
-    return max(dist)
+    return max(dist) 
     
